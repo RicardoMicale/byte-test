@@ -122,13 +122,15 @@ export default function EmployeeForm({
               {type === 'update' ? 'Editar' : 'Registrar'} datos del empleado
             </CardDescription>
           </section>
-          <section className="space-x-2">
-            <PDFButton employee={employee} />
-            <ExcelExport
-              data={[employee]}
-              fileName={`${employee.firstName}-${employee.lastName}`}
-            />
-          </section>
+          {type === 'update' && (
+            <section className="space-x-2">
+              <PDFButton employee={employee} />
+              <ExcelExport
+                data={[employee]}
+                fileName={`${employee.firstName}-${employee.lastName}`}
+              />
+            </section>
+          )}
         </div>
       </CardHeader>
       <CardContent>
