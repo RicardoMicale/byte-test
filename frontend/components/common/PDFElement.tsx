@@ -1,7 +1,7 @@
 import React from 'react';
 import { getStatusText } from '@/lib/employeeFunctions';
 import { Employee } from '@/models';
-import { Text } from '@react-pdf/renderer';
+import { Text, View } from '@react-pdf/renderer';
 
 interface PDFElementProps {
   employee: Employee;
@@ -10,18 +10,55 @@ interface PDFElementProps {
 
 export default function PDFElement({ employee, index }: PDFElementProps) {
   return (
-    <div style={{ marginBottom: '20mm' }}>
-      {index && <Text>Empleado #{index}</Text>}
-      <section>
+    <View
+      wrap={false}
+      style={{ marginBottom: '5mm', marginLeft: '10mm', marginTop: '5mm' }}
+    >
+      {index && (
+        <View
+          style={{
+            fontSize: '12pt',
+            fontWeight: 'bold',
+            marginBottom: '2mm',
+            textDecoration: 'underline',
+          }}
+        >
+          <Text>Empleado #{index}</Text>
+        </View>
+      )}
+      <View
+        style={{
+          fontWeight: 'bold',
+          fontSize: '12pt',
+          marginRight: '2mm',
+          marginBottom: '1mm',
+        }}
+      >
         <Text>Nombre: {`${employee.firstName} ${employee.lastName}`}</Text>
-      </section>
-      <Text>{employee.email}</Text>
-      <section>
+      </View>
+      <View style={{ fontSize: '12pt', marginBottom: '1mm' }}>
+        <Text>Correo electrónico: {employee.email}</Text>
+      </View>
+      <View
+        style={{
+          fontWeight: 'bold',
+          fontSize: '12pt',
+          marginRight: '2mm',
+          marginBottom: '1mm',
+        }}
+      >
         <Text>Estatus: {getStatusText(employee.status ?? 0)}</Text>
-      </section>
-      <section>
+      </View>
+      <View
+        style={{
+          fontWeight: 'bold',
+          fontSize: '12pt',
+          marginRight: '2mm',
+          marginBottom: '1mm',
+        }}
+      >
         <Text>Posición: {employee.position}</Text>
-      </section>
-    </div>
+      </View>
+    </View>
   );
 }
