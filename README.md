@@ -2,7 +2,7 @@
 
 ## Para correr localmente:
 
-Hacer `bash $ npm install` en las carpetas backend y frontend por separado
+Hacer `npm install` en las carpetas backend y frontend por separado
 
 Agregar las variables de entorno:
 
