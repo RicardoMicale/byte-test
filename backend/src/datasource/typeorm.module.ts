@@ -1,9 +1,14 @@
 import { DataSource } from 'typeorm';
 import { Global, Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { EmployeesModule } from 'src/employees/employees.module';
 
 @Global() // makes the module available globally for other modules once imported in the app modules
 @Module({
-  imports: [],
+  imports: [
+    ConfigModule,
+    ConfigModule.forRoot({ envFilePath: ['variables.env'] }),
+  ],
   providers: [
     {
       provide: DataSource, // add the datasource as a provider

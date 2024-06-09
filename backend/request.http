@@ -1,0 +1,10 @@
+POST http://localhost:8000/employees/create
+Content-Type: application/json
+
+{
+  "firstName": "Francesca",
+  "lastName": "Marinuzzi",
+  "email": "test@email.com",
+  "status": 0,
+  "position": "Directora de tecnología"
+}

@@ -4,6 +4,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { EmployeeEntity } from './employees.entity';
@@ -34,7 +35,7 @@ export class EmployeesService {
     } catch (err) {
       if (err.code == 23505) {
         this.logger.error(err.message, err.stack);
-        throw new HttpException('username already exists', HttpStatus.CONFLICT);
+        throw new HttpException('email already exists', HttpStatus.CONFLICT);
       }
       this.logger.error(err.message, err.stack);
       throw new InternalServerErrorException(
@@ -46,7 +47,9 @@ export class EmployeesService {
   async getAllEmployees(): Promise<Employee> {
     try {
       //  gets all employees
-      const employees = this.employeeRepository.find();
+      const employees = this.employeeRepository.find({
+        select: ['id', 'firstName', 'lastName', 'email', 'status', 'position'],
+      });
       return employees;
     } catch (err) {
       this.logger.error(err.message, err.stack);
@@ -65,6 +68,10 @@ export class EmployeesService {
           id,
         },
       });
+      //  if the employee is not found
+      if (!employee) {
+        throw new NotFoundException('Employee not found');
+      }
       return employee;
     } catch (err) {
       this.logger.error(err.message, err.stack);
@@ -79,8 +86,21 @@ export class EmployeesService {
     updatedEmployee: Employee,
   ): Promise<Employee> {
     try {
+      //  gets the employee with the i passed and returns it
+      const employee = this.employeeRepository.findOne({
+        select: ['id', 'firstName', 'lastName', 'email', 'status', 'position'],
+        where: {
+          id,
+        },
+      });
+      //  if the employee is not found
+      if (!employee) {
+        throw new NotFoundException('Employee not found');
+      }
+      //  spreads the employee object found and overwrites the object properties being updated
+      const _employee = { ...employee, ...updatedEmployee };
       //  updates the employee with the id passed and the data in the updatedEmployee object
-      return this.employeeRepository.update(id, updatedEmployee);
+      return this.employeeRepository.update(id, _employee);
     } catch (err) {
       this.logger.error(err.message, err.stack);
       throw new InternalServerErrorException(

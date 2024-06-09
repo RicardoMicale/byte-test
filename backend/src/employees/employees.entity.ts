@@ -15,11 +15,11 @@ export class EmployeeEntity {
   position: string;
 
   @Column({ default: 0 })
-  status: number;
+  status: number; //  0 => disponible | 1 => vacaciones | 2 => no disponible | 3 => enfermo
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ default: '1234' })
   password: string;
 }
