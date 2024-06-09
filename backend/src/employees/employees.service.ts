@@ -30,6 +30,19 @@ export class EmployeesService {
   //  create handler to create new employee and save to the database
   async createEmployee(createEmployee: Employee): Promise<EmployeeEntity> {
     try {
+      //  checks if the email already exists
+      const employeeExists = await this.employeeRepository.findOne({
+        select: ['email'],
+        where: {
+          email: createEmployee.email,
+        },
+      });
+
+      //  if it exists throws an error
+      if (employeeExists) {
+        throw new Error('email already exists');
+      }
+      //  else it creates the employee
       const employee = await this.employeeRepository.create(createEmployee);
       return await this.employeeRepository.save(employee);
     } catch (err) {

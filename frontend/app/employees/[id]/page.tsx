@@ -27,7 +27,6 @@ export default function EmployeePage() {
     const path = 'employees/get';
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}/${id}`);
     const json = await res.json();
-    console.log(json);
     setEmployee(json);
   };
   return (

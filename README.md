@@ -1,6 +1,15 @@
 # byte-test
 
 ## Para correr localmente:
+Agregar las variables de entorno:
+
+Para backend:
+- Crear archivo backend/variables.env
+- Agregar variables: (DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD)
+
+Para frontend:
+- Crear archivo frontend/.env.local
+- Agregar variable NEXT_PUBLIC_API_URL
 
 # Backend (Nestjs y Postgres)
 

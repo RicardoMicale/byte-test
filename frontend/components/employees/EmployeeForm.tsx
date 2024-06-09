@@ -24,6 +24,7 @@ import { CheckIcon } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import PDFButton from '../common/PDFButton';
 import ExcelExport from '../common/ExcelButton';
+import { useToast } from '../ui/use-toast';
 
 interface EmployeeFormProps {
   employee: Employee;
@@ -42,6 +43,8 @@ export default function EmployeeForm({
   const router = useRouter();
   //  helper state
   const [canClick, setCanClick] = React.useState(true);
+  //  toast component activator
+  const { toast } = useToast();
 
   const createEmployee = async () => {
     try {
@@ -59,7 +62,16 @@ export default function EmployeeForm({
         },
       });
       //  if the employee was created, redirect to employee table
-      if (res) router.push('/');
+      if (res.ok) {
+        toast({
+          title: 'Empleado registrado',
+        });
+        router.push('/');
+      } else {
+        toast({
+          title: 'Ocurrió un error',
+        });
+      }
     } catch (err) {
       console.error(err);
     } finally {
@@ -83,7 +95,16 @@ export default function EmployeeForm({
         },
       });
       //  if the employee was updated, redirect to employee table
-      if (res) router.push('/');
+      if (res.ok) {
+        toast({
+          title: 'Empleado actualizado',
+        });
+        router.push('/');
+      } else {
+        toast({
+          title: 'Ocurrió un error',
+        });
+      }
     } catch (err) {
       console.error(err);
     } finally {
