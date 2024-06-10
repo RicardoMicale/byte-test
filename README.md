@@ -16,14 +16,16 @@ Para frontend:
 - Crear archivo frontend/.env.local
 - Agregar variable NEXT_PUBLIC_API_URL
 
-# Backend (Nestjs y Postgres)
+Luego correr en simultaneo los siguientes dos comandos:
+
+## Backend (Nestjs y Postgres)
 
 ```bash
 # watch mode
 $ npm run start:dev
 ```
 
-# Frontend (Nextjs)
+## Frontend (Nextjs)
 
 ```bash
 # run development server
